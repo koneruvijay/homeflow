@@ -8,5 +8,4 @@ Single source of truth for every interface between deployables.
   - `ts/` → consumed by `apps/web` via `@homeflow/ts-common`
   - `python/` → consumed by Python services via `homeflow-common`
 
-Run `pnpm contracts:gen` after changing a schema. Changing a contract
-triggers CI for every package that depends on it.
+Run `pnpm contracts:gen` after changing a schema.

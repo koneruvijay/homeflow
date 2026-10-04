@@ -1,12 +1,12 @@
 # Architecture
 
-| Unit                | Kind            | Deploys as             | Depends on (shared)              |
+| Unit                | Kind            | Runs as                | Depends on (shared)              |
 |---------------------|-----------------|------------------------|----------------------------------|
-| apps/web            | UX              | container / static     | ts-common, contracts             |
-| apps/api            | API             | container (HTTP)       | py-common, contracts             |
-| services/intake     | worker          | container (queue)      | py-common, contracts             |
-| services/processor  | worker          | container (queue)      | py-common, contracts             |
-| services/chat       | internal API    | container (HTTP)       | py-common, contracts             |
+| apps/web            | UX              | web app                | ts-common, contracts             |
+| apps/api            | API             | HTTP service           | py-common, contracts             |
+| services/intake     | worker          | queue worker           | py-common, contracts             |
+| services/processor  | worker          | queue worker           | py-common, contracts             |
+| services/chat       | internal API    | HTTP service           | py-common, contracts             |
 | db                  | migrations      | one-off job            | —                                |
 
 Rules:

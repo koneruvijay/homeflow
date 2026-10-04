@@ -5,8 +5,8 @@ async document-processing pipeline that builds a RAG knowledge base, and a
 chatbot that searches it.
 
 Shared contracts live in one place (`packages/contracts`); every deployable unit
-lives in its own package with its own manifest, Containerfile and CI workflow, so
-each can be built, versioned and deployed independently.
+lives in its own package with its own manifest, so each can be built, versioned
+and deployed independently.
 
 ## Layout
 
@@ -23,10 +23,8 @@ each can be built, versioned and deployed independently.
 │   ├── contracts/               # source-of-truth schemas: REST (OpenAPI) + events (JSON Schema)
 │   ├── py-common/               # shared Python: config, logging, queue, storage clients
 │   └── ts-common/               # shared TypeScript: API client, generated types
-├── db/                          # database: migrations + seeds (deployed as a migration job)
-├── infra/                       # podman compose, Kubernetes, Terraform
-├── docs/                        # architecture + ADRs
-└── .github/workflows/           # one CI workflow per deployable, path-filtered
+├── db/                          # database: migrations + seeds
+└── docs/                        # architecture + ADRs
 ```
 
 ## Data flow
@@ -54,23 +52,11 @@ web (chatbot) ──► api ──► chat ──► vector store (retrieve) ─
 
 ## Quick start
 
-Requires [Podman](https://podman.io) with `podman compose` (Podman 4.7+ plus
-`podman-compose` or Docker Compose as the provider). On macOS run
-`podman machine init && podman machine start` first.
-
 ```bash
 cp .env.example .env
-make bootstrap      # install pnpm + uv workspaces
-make up             # podman compose: postgres, redis, minio, all services
-                    # (Docker still works: make up ENGINE=docker)
+pnpm install            # TypeScript workspace
+uv sync --all-packages  # Python workspace
 ```
 
-## Deploying a single unit
-
-Each package has its own `Containerfile` (built from the repo root so it can pull in
-shared packages) and its own CI workflow under `.github/workflows/`, triggered
-only when that package or a package it depends on changes.
-
-```bash
-podman build -f services/processor/Containerfile -t homeflow/processor .
-```
+Container builds, CI and infrastructure (compose, Kubernetes, Terraform) will be
+added later.
