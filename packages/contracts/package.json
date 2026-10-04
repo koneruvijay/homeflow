@@ -1,0 +1,13 @@
+{
+  "name": "@homeflow/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "generate": "pnpm generate:ts && pnpm generate:py",
+    "generate:ts": "openapi-typescript openapi/api.yaml -o generated/ts/api.d.ts",
+    "generate:py": "datamodel-codegen --input events --input-file-type jsonschema --output generated/python/events.py"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.4.0"
+  }
+}

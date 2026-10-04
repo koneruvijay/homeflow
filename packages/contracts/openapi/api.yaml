@@ -1,0 +1,75 @@
+openapi: 3.1.0
+info:
+  title: HomeFlow API
+  version: 0.1.0
+paths:
+  /files:
+    post:
+      summary: Upload a file for processing
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file: { type: string, format: binary }
+      responses:
+        "202":
+          description: Accepted
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/FileStatus" }
+  /files/{fileId}:
+    get:
+      summary: Get processing status
+      parameters:
+        - { name: fileId, in: path, required: true, schema: { type: string, format: uuid } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/FileStatus" }
+  /chat:
+    post:
+      summary: Ask the chatbot a question over the knowledge base
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ChatRequest" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ChatResponse" }
+components:
+  schemas:
+    FileStatus:
+      type: object
+      required: [fileId, status]
+      properties:
+        fileId: { type: string, format: uuid }
+        status:
+          type: string
+          enum: [uploaded, rejected, classified, converting, redacting, chunking, indexed, failed]
+        category: { type: string }
+    ChatRequest:
+      type: object
+      required: [message]
+      properties:
+        conversationId: { type: string }
+        message: { type: string }
+    ChatResponse:
+      type: object
+      required: [answer]
+      properties:
+        answer: { type: string }
+        sources:
+          type: array
+          items:
+            type: object
+            properties:
+              fileId: { type: string }
+              chunkId: { type: string }
+              snippet: { type: string }

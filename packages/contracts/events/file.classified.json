@@ -1,0 +1,15 @@
+{
+  "$id": "file.classified",
+  "title": "FileClassified",
+  "description": "Published by intake after LangChain validation + classification. Consumed by processor.",
+  "type": "object",
+  "required": ["fileId", "storageKey", "valid", "category"],
+  "properties": {
+    "fileId": { "type": "string", "format": "uuid" },
+    "storageKey": { "type": "string" },
+    "valid": { "type": "boolean" },
+    "rejectionReason": { "type": "string" },
+    "category": { "type": "string" },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+  }
+}

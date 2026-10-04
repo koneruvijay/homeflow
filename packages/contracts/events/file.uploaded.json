@@ -1,0 +1,15 @@
+{
+  "$id": "file.uploaded",
+  "title": "FileUploaded",
+  "description": "Published by api after a raw file lands in object storage. Consumed by intake.",
+  "type": "object",
+  "required": ["fileId", "storageKey", "mimeType", "uploadedBy", "uploadedAt"],
+  "properties": {
+    "fileId": { "type": "string", "format": "uuid" },
+    "storageKey": { "type": "string" },
+    "mimeType": { "type": "string" },
+    "sizeBytes": { "type": "integer" },
+    "uploadedBy": { "type": "string" },
+    "uploadedAt": { "type": "string", "format": "date-time" }
+  }
+}

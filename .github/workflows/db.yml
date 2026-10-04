@@ -1,0 +1,13 @@
+name: db
+on:
+  push:
+    branches: [main]
+    paths: [db/**, .github/workflows/db.yml]
+  pull_request:
+    paths: [db/**]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f db/Dockerfile -t homeflow/db-migrate:${{ github.sha }} .

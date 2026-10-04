@@ -1,0 +1,21 @@
+name: intake
+on:
+  push:
+    branches: [main]
+    paths:
+      - services/intake/**
+      - packages/py-common/**
+      - packages/contracts/**
+      - .github/workflows/intake.yml
+  pull_request:
+    paths:
+      - services/intake/**
+      - packages/py-common/**
+      - packages/contracts/**
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -f services/intake/Dockerfile -t homeflow/intake:${{ github.sha }} .

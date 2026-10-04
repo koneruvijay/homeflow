@@ -1,0 +1,13 @@
+{
+  "$id": "document.indexed",
+  "title": "DocumentIndexed",
+  "description": "Published by processor once chunks are embedded and stored in the vector store.",
+  "type": "object",
+  "required": ["fileId", "chunkCount", "redactionCount"],
+  "properties": {
+    "fileId": { "type": "string", "format": "uuid" },
+    "chunkCount": { "type": "integer" },
+    "redactionCount": { "type": "integer" },
+    "collection": { "type": "string" }
+  }
+}

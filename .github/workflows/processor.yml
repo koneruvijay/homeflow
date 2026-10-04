@@ -1,0 +1,21 @@
+name: processor
+on:
+  push:
+    branches: [main]
+    paths:
+      - services/processor/**
+      - packages/py-common/**
+      - packages/contracts/**
+      - .github/workflows/processor.yml
+  pull_request:
+    paths:
+      - services/processor/**
+      - packages/py-common/**
+      - packages/contracts/**
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -f services/processor/Dockerfile -t homeflow/processor:${{ github.sha }} .

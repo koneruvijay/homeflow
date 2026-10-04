@@ -1,0 +1,19 @@
+[project]
+name = "homeflow-workspace"
+version = "0.0.0"
+requires-python = ">=3.12"
+
+[tool.uv.workspace]
+members = [
+  "apps/api",
+  "services/intake",
+  "services/processor",
+  "services/chat",
+  "packages/py-common",
+]
+
+[tool.uv.sources]
+homeflow-common = { workspace = true }
+
+[tool.ruff]
+line-length = 100

@@ -1,0 +1,43 @@
+name: homeflow
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment: { POSTGRES_USER: homeflow, POSTGRES_PASSWORD: homeflow, POSTGRES_DB: homeflow }
+    ports: ["5432:5432"]
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    environment: { MINIO_ROOT_USER: minio, MINIO_ROOT_PASSWORD: minio123 }
+    ports: ["9000:9000", "9001:9001"]
+
+  migrate:
+    build: { context: ../.., dockerfile: db/Dockerfile }
+    environment: { DATABASE_URL: postgresql://homeflow:homeflow@postgres:5432/homeflow }
+    depends_on: [postgres]
+
+  api:
+    build: { context: ../.., dockerfile: apps/api/Dockerfile }
+    env_file: ../../.env
+    ports: ["8000:8000"]
+    depends_on: [postgres, redis, minio]
+  intake:
+    build: { context: ../.., dockerfile: services/intake/Dockerfile }
+    env_file: ../../.env
+    depends_on: [redis, minio]
+  processor:
+    build: { context: ../.., dockerfile: services/processor/Dockerfile }
+    env_file: ../../.env
+    depends_on: [redis, minio, postgres]
+  chat:
+    build: { context: ../.., dockerfile: services/chat/Dockerfile }
+    env_file: ../../.env
+    ports: ["8100:8100"]
+    depends_on: [postgres]
+  web:
+    build: { context: ../.., dockerfile: apps/web/Dockerfile }
+    environment: { NEXT_PUBLIC_API_URL: http://localhost:8000 }
+    ports: ["3000:3000"]
+    depends_on: [api]
