@@ -1,10 +1,6 @@
 name: db
 on:
-  push:
-    branches: [main]
-    paths: [db/**, .github/workflows/db.yml]
-  pull_request:
-    paths: [db/**]
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest

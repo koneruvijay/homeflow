@@ -1,17 +1,6 @@
 name: processor
 on:
-  push:
-    branches: [main]
-    paths:
-      - services/processor/**
-      - packages/py-common/**
-      - packages/contracts/**
-      - .github/workflows/processor.yml
-  pull_request:
-    paths:
-      - services/processor/**
-      - packages/py-common/**
-      - packages/contracts/**
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest

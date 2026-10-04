@@ -1,17 +1,6 @@
 name: web
 on:
-  push:
-    branches: [main]
-    paths:
-      - apps/web/**
-      - packages/ts-common/**
-      - packages/contracts/**
-      - .github/workflows/web.yml
-  pull_request:
-    paths:
-      - apps/web/**
-      - packages/ts-common/**
-      - packages/contracts/**
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest

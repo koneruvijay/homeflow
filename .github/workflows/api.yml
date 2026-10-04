@@ -1,17 +1,6 @@
 name: api
 on:
-  push:
-    branches: [main]
-    paths:
-      - apps/api/**
-      - packages/py-common/**
-      - packages/contracts/**
-      - .github/workflows/api.yml
-  pull_request:
-    paths:
-      - apps/api/**
-      - packages/py-common/**
-      - packages/contracts/**
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
