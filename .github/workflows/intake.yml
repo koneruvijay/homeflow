@@ -7,4 +7,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build image
-        run: docker build -f services/intake/Dockerfile -t homeflow/intake:${{ github.sha }} .
+        run: podman build -f services/intake/Containerfile -t homeflow/intake:${{ github.sha }} .

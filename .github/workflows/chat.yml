@@ -7,4 +7,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build image
-        run: docker build -f services/chat/Dockerfile -t homeflow/chat:${{ github.sha }} .
+        run: podman build -f services/chat/Containerfile -t homeflow/chat:${{ github.sha }} .

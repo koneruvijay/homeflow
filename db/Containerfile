@@ -1,0 +1,6 @@
+# Migration job image. Build from repo root:  podman build -f db/Containerfile .
+FROM docker.io/library/postgres:16-alpine
+RUN apk add --no-cache make
+WORKDIR /db
+COPY db .
+CMD ["make", "migrate"]

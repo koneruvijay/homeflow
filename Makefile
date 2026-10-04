@@ -1,14 +1,18 @@
 .PHONY: bootstrap up down test lint contracts migrate
 
+# Container engine; override with `make up ENGINE=docker`
+ENGINE ?= podman
+COMPOSE_FILE := infra/podman/compose.yaml
+
 bootstrap:
 	pnpm install
 	uv sync --all-packages
 
 up:
-	docker compose -f infra/docker/docker-compose.yml --env-file .env up --build
+	$(ENGINE) compose -f $(COMPOSE_FILE) --env-file .env up --build
 
 down:
-	docker compose -f infra/docker/docker-compose.yml down
+	$(ENGINE) compose -f $(COMPOSE_FILE) down
 
 test:
 	pnpm test

@@ -1,5 +1,5 @@
-# Build from repo root:  docker build -f apps/web/Dockerfile .
-FROM node:22-alpine
+# Build from repo root:  podman build -f apps/web/Containerfile .
+FROM docker.io/library/node:22-alpine
 RUN corepack enable
 WORKDIR /app
 COPY package.json pnpm-workspace.yaml ./
